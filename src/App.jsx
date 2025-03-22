@@ -1,13 +1,11 @@
-
+import NavBar from "./NavBar"
 
 function App() {
 
   return (
     <>
-      
-      <p className="">
-        Hello world
-      </p>
+      <NavBar/>
+    
     </>
   )
 }
