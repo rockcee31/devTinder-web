@@ -1,3 +1,4 @@
+
 import NavBar from "./NavBar"
 
 function App() {
@@ -9,5 +10,6 @@ function App() {
     </>
   )
 }
+
 
 export default App
