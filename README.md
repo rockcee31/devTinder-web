@@ -55,3 +55,6 @@ children get rendered in Outlet component so you have to create it in body also 
 
 
 nothing for today revise routing
+
+
+redux from 
