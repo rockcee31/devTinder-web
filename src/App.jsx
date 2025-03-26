@@ -1,5 +1,5 @@
 
-import NavBar from "./NavBar"
+import Body from './Body'
 import { BrowserRouter,Routes,Route } from 'react-router-dom'
 function App() {
 
@@ -9,7 +9,8 @@ function App() {
 
 <BrowserRouter basename="/">
  <Routes>
-   <Route path="/login " element={<div>Login Page</div>}>
+   <Route path="/" element={<Body/>}>
+   <Route/>3
    </Route>
  </Routes>
 </BrowserRouter>

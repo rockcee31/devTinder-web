@@ -13,7 +13,7 @@ content  :["./index.html","./src/**/*.{js,ts,jsx,tsx}"]  //tailwind will be trac
 in the index.css write code  that tailwind documentation says
 
 
---Install tailwinf css 
+--Install tailwind css 
 along qith tailwind,
 we will also be using design compononent library  - daizy ui
 compaitible with tailwins
