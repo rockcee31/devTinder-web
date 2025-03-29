@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { addUser } from './utils/userSlice';
+
 const Login = () => {
 //api wo hota hai jo connection karwata hai req ka server se or server se response laake user  ko de rha hai 
+  const dispatch = useDispatch()
   const [emailId,setemailID] = useState("");
   const [password,setpassworrd] = useState("");
  //login to handle api he karega 
@@ -11,9 +15,11 @@ try{
       emailId,
       password
     },{withCredentials:true}) //allow server to send response with credentials like cookiee and send back that cookie for otheer api so that we can authenticate
-    console.log(res)
+    console.log(res.data)
+    dispatch(addUser(res.data))
 }catch(err){
   console.log(err)
+
 }
 }//when you make api call from x domain to y domain than it gives you cors error(cross origin error and only browser throws this error cause they don't allow it due security reason even the port number matter here if your making call to 7777 from 3000 this also throw error so browser req to be made to same domain and host so we can handle it in api level we can bypass cors in the api level or backend so in login api we can bypass cors so we can use cors middleware provided by exppress 
 // u just have to do npm i cors 
@@ -73,3 +79,8 @@ export default Login
 // when you make this api call  you will get cors error i will just import that cors and use it in app.js in backend  and use it at the top app.use(cors)
 
 // so now when i logged in i got the response back you will cookie is not getting saved cause cors is still not sending credential and our credential from frontend not getting there properly  so inn frontend axios 2nd parameter i have to do withcredential:true and in backen d parameter i have to do credential true
+
+//now when user login i will take him to the feed page lets see how to do  its answer is we will use useNavigate  return navigate("/")
+
+
+// we will store the data in redux store
