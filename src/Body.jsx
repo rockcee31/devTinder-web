@@ -6,9 +6,9 @@ const Body = () => {
   return (
     <div >
     <NavBar/>
-    <div className='h-full w-full'>
+    
     <Outlet/>
-    </div>
+    
     </div>
 
   
