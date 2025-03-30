@@ -11,8 +11,9 @@ const NavBar = () => {
   <div className="flex gap-2">
     {/* <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" /> */}
     <div className="dropdown dropdown-end mr-5">
-      {user&&<div>
-        <h2>Welcome {user.name}</h2>
+      <div className='flex items-center'>
+      {user&&<div className='px-5 font-bold'>
+        <h2>WELCOME {user.name.toUpperCase()}!</h2>
         </div>}
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
@@ -21,6 +22,8 @@ const NavBar = () => {
             src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
         </div>
       </div>
+      </div>
+
       <ul
         tabIndex={0}
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">

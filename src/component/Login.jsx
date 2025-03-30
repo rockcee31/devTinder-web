@@ -1,22 +1,26 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { addUser } from './utils/userSlice';
-
+import { addUser } from '../utils/userSlice';
+import { useNavigate } from 'react-router-dom';
+import BASE_URL from "../utils/constants";
 const Login = () => {
 //api wo hota hai jo connection karwata hai req ka server se or server se response laake user  ko de rha hai 
   const dispatch = useDispatch()
   const [emailId,setemailID] = useState("");
   const [password,setpassworrd] = useState("");
+  const navigate = useNavigate();
+  
  //login to handle api he karega 
 const handleLogin = async()=>{
 try{
-    const res = await axios.post("http://localhost:3000/login",{
+    const res = await axios.post(BASE_URL+"/login",{
       emailId,
       password
     },{withCredentials:true}) //allow server to send response with credentials like cookiee and send back that cookie for otheer api so that we can authenticate
     console.log(res.data)
     dispatch(addUser(res.data))
+    navigate("/Feed")
 }catch(err){
   console.log(err)
 
