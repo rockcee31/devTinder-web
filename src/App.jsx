@@ -13,9 +13,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Body />}>  {/*parent route top level route */}
           {/* ✅ Use relative paths (without `/`) for child routes nested */}
+          <Route path="/" element={<Feed />} />
           <Route path="Login" element={<Login />} />
           <Route path="Profile" element={<Profile />} />
-          <Route path="Feed" element={<Feed />} />
+          
         </Route>
       </Routes>
     </BrowserRouter>

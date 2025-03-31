@@ -20,7 +20,7 @@ try{
     },{withCredentials:true}) //allow server to send response with credentials like cookiee and send back that cookie for otheer api so that we can authenticate
     console.log(res.data)
     dispatch(addUser(res.data))
-    navigate("/Feed")
+    navigate("/")
 }catch(err){
   console.log(err)
 
@@ -88,3 +88,7 @@ export default Login
 
 
 // we will store the data in redux store
+
+//now there is one more  problem once we login and than we refresh thepage we automatically gets logout so to that i know that im loading my body component on base path so when page loads our body will rendered first so inside that component i will check token present or not
+
+//what when im fetching a profile a  user after login my api call is made twice why it is made twice cause we are in strict mode you can reomove it  but in productiobn it will work fine but in dev mode it makes to api call just to make sure if rendering is working perfect or not
