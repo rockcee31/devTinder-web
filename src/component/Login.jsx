@@ -10,7 +10,7 @@ const Login = () => {
   const [emailId,setemailID] = useState("");
   const [password,setpassworrd] = useState("");
   const navigate = useNavigate();
-  
+  const [error,seterror] = useState("");
  //login to handle api he karega 
 const handleLogin = async()=>{
 try{
@@ -23,6 +23,7 @@ try{
     navigate("/")
 }catch(err){
   console.log(err)
+  seterror(err?.response?.data)
 
 }
 }//when you make api call from x domain to y domain than it gives you cors error(cross origin error and only browser throws this error cause they don't allow it due security reason even the port number matter here if your making call to 7777 from 3000 this also throw error so browser req to be made to same domain and host so we can handle it in api level we can bypass cors in the api level or backend so in login api we can bypass cors so we can use cors middleware provided by exppress 
@@ -63,7 +64,7 @@ try{
             </p>
             </div>
 
-
+          <div className='text-rose-500'><p>{error}</p></div>
 
           <div className="card-actions justify-center">
             <button className="btn btn-active btn-primary" onClick={handleLogin}>Login</button>
