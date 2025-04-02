@@ -9,13 +9,14 @@ import FeedCards from './FeedCards'
 
 const Feed = () => {
   const feed = useSelector((store)=>store.feed)
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
 
   const handleFeed = async()=>{
   try{ 
     if(feed) return;
-    const res= await axios.get(BASE_URL+"/feed")
-    dispatch(addFeed(res))
+    const res= await axios.get(BASE_URL+"/feed",{withCredentials:true})
+    dispatch(addFeed(res.data))
+    // console.log(res)
 
   }catch(err){
     console.error(err)
@@ -25,8 +26,11 @@ const Feed = () => {
   useEffect(()=>{
     handleFeed();
   },[])
+
   return (
-    <div>{feed&&<FeedCards/>}</div>
+    feed&&(<div className='flex justify-center my-10'>
+      <FeedCards/>
+    </div>)
   )
 
 }
