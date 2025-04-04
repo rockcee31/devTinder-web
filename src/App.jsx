@@ -3,7 +3,7 @@ import Body from "./component/Body";
 import Login from "./component/Login";   // ✅ Import Login component
 import Profile from "./component/Profile"; // ✅ Import Profile component
 import { Provider } from "react-redux";
-import appStore from "./utils/appStore"
+import appStore from "./redux/appStore"
 import Feed from "./component/Feed";
 import Connections from "./component/Connections"
 import Requests from "./component/Requests"

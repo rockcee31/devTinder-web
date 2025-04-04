@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useDispatch,  useSelector } from 'react-redux';
 import BASE_URL from '../utils/constants';
-import {addUser} from "../utils/userSlice"
+import {addUser} from "../redux/slices/userSlice"
 
 const EditProfile = ({setedit,setshowToast}) => {
     const user = useSelector((store)=>store.user)

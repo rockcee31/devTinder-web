@@ -2,15 +2,15 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import BASE_URL from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
-import { addRequest } from '../utils/requestSlice'
+import { addRequest } from '../redux/slices/requestSlice'
 
 const Requests = () => {
   const dispatch = useDispatch();
-  const requests = useSelector((store) => store.requests)
+  const requests = useSelector((store) => store.request)
   const fetchRequests = async () => {
     try {
       const res = await axios.get(BASE_URL + "/user/requests/received", { withCredentials: true })
-      console.log(res)
+      
       dispatch(addRequest(res.data.data))
 
 
@@ -20,19 +20,20 @@ const Requests = () => {
   }
   useEffect(() => {
     fetchRequests();
-  })
-  if (!requests) return
+  },[])
 
-  if (requests.length == 0) return <h1>NO REQUESTS</h1>
+  if (!requests) return
+  console.log(requests)
+  if (requests.length === 0) return <h1>NO REQUESTS</h1>
   return (
-    <div>
-      <h1>REQUESTS</h1>
+    <div className=''>
+      <h1 className='text-center text-5xl font-bold'>REQUESTS</h1>
       {requests.map((reqobj) => {
-        const { _id, name, photoUrl, age, gender, about } = reqobj;
+        const { _id, name, photoUrl, age, gender, about } = reqobj.fromUserId;
         return (
           <div
             key={_id}
-            className="flex m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto"
+            className="flex m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto "
           >
             <div>
               <img
@@ -41,12 +42,18 @@ const Requests = () => {
                 src={photoUrl}
               />
             </div>
+            <div className='flex justify-between items-center w-full'>
             <div className="text-left mx-4 ">
               <h2 className="font-bold text-xl">
                 {name}
               </h2>
               {age && gender && <p>{age + ", " + gender}</p>}
               <p>{about}</p>
+            </div>
+            <div className=''>
+            <button className="btn btn-error mx-1">Reject</button>
+            <button className="btn btn-primary mx-1">Accept</button>
+            </div>
             </div>
           </div>)
       }

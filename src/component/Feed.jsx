@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import BASE_URL from '../utils/constants'
-import { addFeed } from '../utils/feedSlice'
+import { addFeed } from '../redux/slices/feedSlice'
 import { useSelector } from 'react-redux'
 import FeedCards from './FeedCards'
 
