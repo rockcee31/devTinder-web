@@ -1,25 +1,36 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch,  useSelector } from 'react-redux';
 import BASE_URL from '../utils/constants';
-import { FaArrowRight } from "react-icons/fa";
+import {addUser} from "../utils/userSlice"
 
-const EditProfile = () => {
+const EditProfile = ({setedit,setshowToast}) => {
     const user = useSelector((store)=>store.user)
    console.log(user)
-    // const [photUrl,setphotoUrl] = useState(user?.photo);
+    const [photoUrl,setphotoUrl] = useState(user?.photo);
     const [name,setname] = useState(user.name)
     // const [skills,setskills] = useState(user.skill)
     const [age,setage] = useState(user.age)
     const [skills,setskills] = useState(user.skills)
-    // const [gender,setgender] = useState(user.gender)
+    const [gender,setgender] = useState(user.gender)
+    const dispatch = useDispatch();
     
     const submitEdit = async() =>{
       try{
-      await axios.post(BASE_URL+"/profile/edit",{
+      const res = await axios.patch(BASE_URL+"/profile/edit",{
         name,
-        age
+        age,
+        gender,
+        photoUrl,
+        skills
       },{withCredentials:true})
+      
+      
+      dispatch(addUser(res?.data?.data))
+      setshowToast(true);
+      setTimeout(() => {
+        setshowToast(false);
+      }, 3000);
       }catch(err){
         console.log(err)
       }
@@ -40,6 +51,7 @@ const EditProfile = () => {
                <div className='label my-1'>
                    <span className='label-text '>Name:</span>
                </div>
+               
                <input 
                type="text"
                value={name}
@@ -60,7 +72,29 @@ const EditProfile = () => {
 
             <label className='form-control w-full max-w-xs my-2'>
                <div className='label my-1'>
-                   <span className='label-text '>Age:</span>
+                   <span className='label-text '>Gender:</span>
+               </div>
+               <input 
+               type="text"
+               value={gender}
+               className='input input-bordered w-full max-w-xs text-gray-500'
+               onChange={(e)=>setgender(e.target.value)} />
+            </label>
+
+            <label className='form-control w-full max-w-xs my-2'>
+               <div className='label my-1'>
+                   <span className='label-text '>Photo:</span>
+               </div>
+               <input 
+               type="text"
+               value={photoUrl}
+               className='input input-bordered w-full max-w-xs text-gray-500'
+               onChange={(e)=>setphotoUrl(e.target.value)} />
+            </label>
+
+            <label className='form-control w-full max-w-xs my-2'>
+               <div className='label my-1'>
+                   <span className='label-text'>Skills:</span>
                </div>
                <input 
                type="text"
@@ -72,7 +106,7 @@ const EditProfile = () => {
           </div>
 
           <div className="card-actions justify-center">
-            <button className="btn btn-active btn-primary" onClick={submitEdit}>Submit</button>
+            <button className="btn btn-active btn-primary" onClick={()=>{submitEdit(),setedit(true)}}>Submit</button>
           </div>
           
         </div>

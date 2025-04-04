@@ -21,7 +21,11 @@ const FeedCards = () => {
                             <h1 className=" text-xl font-bold">Name : {e.name.toUpperCase()}</h1>
                             {e.age && e.gender && <h1  className=" text-xl font-bold">Age & Gender : {`${e.age} ${e.gender}`}</h1>}
                             <h1  className=" text-xl font-bold">Skills : {e.skills ? e.skills: "N/A"}</h1>
-                            
+                            </div>
+
+                            <div className='flex justify-end mx-2'>
+                            <button className="btn btn-error mx-2">Ignore</button>
+                            <button className="btn btn-primary mx-2">Interested</button>
                             </div>
                         </div>
                     ))
