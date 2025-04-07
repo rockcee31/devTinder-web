@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import BASE_URL from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { addRequest } from '../redux/slices/requestSlice'
@@ -7,6 +7,7 @@ import { addRequest } from '../redux/slices/requestSlice'
 const Requests = () => {
   const dispatch = useDispatch();
   const requests = useSelector((store) => store.request)
+  const [showButton,setshowButton] = useState(true)
   const fetchRequests = async () => {
     try {
       const res = await axios.get(BASE_URL + "/user/requests/received", { withCredentials: true })
@@ -18,6 +19,14 @@ const Requests = () => {
       console.log(err)
     }
   }
+  const updateRequest = async(status,_id) =>{
+    try{
+      await axios.post(BASE_URL+`/request/review/${status}/${_id}`)
+
+    }catch(err){
+        console.log(err)
+    }
+  }
   useEffect(() => {
     fetchRequests();
   },[])
@@ -25,6 +34,7 @@ const Requests = () => {
   if (!requests) return
   console.log(requests)
   if (requests.length === 0) return <h1>NO REQUESTS</h1>
+  const requestId = requests._id;
   return (
     <div className=''>
       <h1 className='text-center text-5xl font-bold'>REQUESTS</h1>
@@ -50,10 +60,12 @@ const Requests = () => {
               {age && gender && <p>{age + ", " + gender}</p>}
               <p>{about}</p>
             </div>
-            <div className=''>
-            <button className="btn btn-error mx-1">Reject</button>
-            <button className="btn btn-primary mx-1">Accept</button>
-            </div>
+            { showButton && (
+              <div className=''>
+            <button className="btn btn-error mx-1" onClick={()=>{updateRequest("rejected",requestId); setshowButton(false)}}>Reject</button>
+            <button className="btn btn-primary mx-1" onClick={()=>{updateRequest("accepted",requestId); setshowButton(false)}}>Accept</button>
+            </div>)
+            }
             </div>
           </div>)
       }
