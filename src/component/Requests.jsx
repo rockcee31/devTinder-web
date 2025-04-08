@@ -19,9 +19,10 @@ const Requests = () => {
       console.log(err)
     }
   }
+
   const updateRequest = async(status,_id) =>{
     try{
-      await axios.post(BASE_URL+`/request/review/${status}/${_id}`)
+      await axios.post(BASE_URL+`/request/review/${status}/${_id}`,{},{ withCredentials: true })
 
     }catch(err){
         console.log(err)
@@ -32,14 +33,17 @@ const Requests = () => {
   },[])
 
   if (!requests) return
+
   console.log(requests)
   if (requests.length === 0) return <h1>NO REQUESTS</h1>
-  const requestId = requests._id;
+ 
+
   return (
     <div className=''>
       <h1 className='text-center text-5xl font-bold'>REQUESTS</h1>
       {requests.map((reqobj) => {
-        const { _id, name, photoUrl, age, gender, about } = reqobj.fromUserId;
+        const {_id} = reqobj
+        const { name, photoUrl, age, gender, about } = reqobj.fromUserId;
         return (
           <div
             key={_id}
@@ -62,8 +66,8 @@ const Requests = () => {
             </div>
             { showButton && (
               <div className=''>
-            <button className="btn btn-error mx-1" onClick={()=>{updateRequest("rejected",requestId); setshowButton(false)}}>Reject</button>
-            <button className="btn btn-primary mx-1" onClick={()=>{updateRequest("accepted",requestId); setshowButton(false)}}>Accept</button>
+            <button className="btn btn-error mx-1" onClick={()=>{updateRequest("rejected",_id); setshowButton(false)}}>Reject</button>
+            <button className="btn btn-primary mx-1" onClick={()=>{updateRequest("accepted",_id); setshowButton(false)}}>Accept</button>
             </div>)
             }
             </div>
