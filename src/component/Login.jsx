@@ -7,6 +7,8 @@ import BASE_URL from "../utils/constants";
 const Login = () => {
 //api wo hota hai jo connection karwata hai req ka server se or server se response laake user  ko de rha hai 
   const dispatch = useDispatch()
+  const [name,setname] = useState('');
+  const [isLogin,setisLogin] = useState(true)
   const [emailId,setemailID] = useState("");
   const [password,setpassworrd] = useState("");
   const navigate = useNavigate();
@@ -25,19 +27,35 @@ try{
   console.log(err)
   seterror(err?.response?.data)
 
-}
-}//when you make api call from x domain to y domain than it gives you cors error(cross origin error and only browser throws this error cause they don't allow it due security reason even the port number matter here if your making call to 7777 from 3000 this also throw error so browser req to be made to same domain and host so we can handle it in api level we can bypass cors in the api level or backend so in login api we can bypass cors so we can use cors middleware provided by exppress 
+}}//when you make api call from x domain to y domain than it gives you cors error(cross origin error and only browser throws this error cause they don't allow it due security reason even the port number matter here if your making call to 7777 from 3000 this also throw error so browser req to be made to same domain and host so we can handle it in api level we can bypass cors in the api level or backend so in login api we can bypass cors so we can use cors middleware provided by exppress 
 // u just have to do npm i cors 
 
 // //controlled component first value is set to password means password is controlliing aned when ever we change the value onchange is changing password value
 
+const handleSignUp = async()=>{
+  try{
+    const res = await axios.post(BASE_URL+"/signup",{name,emailId,password},{withCredentials:true})
+    dispatch(addUser(res.data.data))
+  }catch(err){
+     console.log(err)
+  }
+}
   return (
 
     <div className='flex items-center justify-center my-20'>
       <div className="card card-dash bg-base-200 w-96 border-4">
         <div className="card-body">
 
-          <h2 className='card-title'>Login</h2>
+          <h2 className='card-title'>{isLogin?"Login":"Sign up"}</h2>
+          {/* name */}
+          {!isLogin && <div>
+          <span className="fieldset-legend">name</span>
+            <label className="input validator">
+              <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></g></svg>
+              <input type="text" placeholder="name" required  value={name} onChange={(e)=>setname(e.target.value)}/>
+            </label>
+            <div className="validator-hint hidden">Enter valid email address</div>
+          </div> }
           {/* Email */}
           <div>
           <span className="fieldset-legend">Email ID</span>
@@ -67,9 +85,10 @@ try{
           <div className='text-rose-500'><p>{error}</p></div>
 
           <div className="card-actions justify-center">
-            <button className="btn btn-active btn-primary" onClick={handleLogin}>Login</button>
+            <button className="btn btn-active btn-primary" onClick={()=>{handleLogin(),handleSignUp()}}>{isLogin?'Login':'SignUp'}</button>
           </div>
           
+          <div onClick={setisLogin((value)=>!value)}><p>{isLogin?"new User:Sign Up":"existing User:Login"}</p></div>
         </div>
       </div>
     </div>
