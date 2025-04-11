@@ -4,10 +4,10 @@ const ProfileView = ({setedit}) => {
     const user = useSelector((store)=>store.user);
     const {name,age,gender,skills,photoUrl} = user 
   return (
-    <div className="card bg-base-100 w-96 shadow-sm">
-  <figure>
+    <div className="card bg-base-100 w-96 shadow-sm overflow-hidden">
+  <figure >
     <img
-      src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+      src={photoUrl}
       alt="Shoes" />
   </figure>
 

@@ -1,14 +1,43 @@
+import axios from 'axios';
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import BASE_URL from '../utils/constants';
+import { removeFeed } from '../redux/slices/feedSlice';
 
 const FeedCards = () => {
+    const dispatch = useDispatch();
     const feed = useSelector((store) => store.feed) 
      console.log(feed)
+
+     const showInterest = async(status,toUserId)=>{
+        try{
+           const res = await axios.post(BASE_URL+`/request/send/${status}/${toUserId}`,{},{withCredentials:true})
+           console.log(res)
+           dispatch(removeFeed(toUserId))
+        }catch(err){
+                console.log(err)
+        }
+    }
+
+     const ignoreProfile = async(status,toUserId)=>{
+        try{
+           const res = await axios.post(BASE_URL+`/request/send/${status}/${toUserId}`,{},{withCredentials:true})
+           console.log(res)
+           dispatch(removeFeed(toUserId))
+        }catch(err){
+                console.log(err)
+        }
+    }
+    if(!feed) return
+    if(feed.length<=0) return (<div><h2>No User To Show</h2></div>)
+
     return (
         <div>
             <div className="carousel rounded-box w-md">
                 {feed.length > 0 ? (
-                    feed.map((e, index) => (
+                    feed.map((e, index) =>{ 
+                        const {_id} = e;
+                        return(
                         <div key={index} className="carousel-item w-full flex flex-col">
                           
                             <img 
@@ -24,11 +53,11 @@ const FeedCards = () => {
                             </div>
 
                             <div className='flex justify-end mx-2'>
-                            <button className="btn btn-error mx-2">Ignore</button>
-                            <button className="btn btn-primary mx-2">Interested</button>
-                            </div>
+                            <button className="btn btn-error mx-2" onClick={()=>{ignoreProfile("ignored",_id)}}>Ignore</button>
+                            <button className="btn btn-primary mx-2" onClick={()=>{showInterest("interested",_id)}}>Interested</button>
+                            </div>         
                         </div>
-                    ))
+                    )})
                 ) : (
                     <div className="text-center">No feed available</div>
                 )}
